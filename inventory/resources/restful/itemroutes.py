@@ -1,5 +1,6 @@
 from flask_restful import Resource,request
 from inventory.resources.database import items,events
+from sqlalchemy import exc
 import json
 
 class single_item_resource(Resource):
@@ -21,16 +22,18 @@ class single_item_resource(Resource):
     def put(self,item_ID):
         # update item
         content = request.json
-        items.update_item(item_ID,**content)
-
-        return json.dumps(items.return_all_items_by_ID())
+        try:
+            items.update_item(item_ID,**content)
+            return json.dumps(items.return_all_items_by_ID())
+        except exc.IntegrityError:
+            return json.dumps('ID or barcode already exists!'),409
 
     def delete(self,item_ID):
         if items.verify_if_item_exists(item_ID):
             items.delete_item(item_ID)
             return items.return_all_items_by_ID()
         else:
-            return json.dumps({}),404
+            return json.dumps('Item does not exist!'),404
 
 
 class all_items_resource(Resource):
