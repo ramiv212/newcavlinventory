@@ -1,0 +1,104 @@
+body {
+  background-color: rgb(250, 250, 250);
+}
+
+.itemlist-outer-wrapper{
+  width: 40%;
+  background-color: white;
+}
+
+.itemlist {
+  padding: 20px;
+}
+
+.itemlist-inner-wrapper {
+  padding: 5px;
+}
+
+.itemlist-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  border-width: .4em;
+  border-top: solid;
+  /* border-bottom: solid; */
+  border-color: lightgray;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+
+.itemlist-item:hover {
+  background-color: rgb(245, 245, 245);
+}
+
+.itemlist-children {
+  width: auto;
+  /* padding-top: 10px; */
+  padding-left: 20px;
+}
+
+.itemlist-child {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  vertical-align: left;
+  margin-left: 0;
+
+  border-top: solid;
+  border-width: .4em;
+  border-top: solid;
+  /* border-bottom: solid; */
+  border-color: lightgray;
+  font-size: 12px;
+
+}
+
+.itemlist-child:hover{
+  background-color: rgb(245, 245, 245);
+}
+
+.item-info-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.itemlist-child {
+  display: flex;
+  flex-direction: row;
+}
+
+.itemlist-child-inner-div{
+  display: flex;
+}
+
+.item-child-text {
+  display: flex;
+  padding-right: 10px;
+  text-align: right;
+  line-height: 26px;
+}
+
+.child-item-button-div {
+display: flex;
+flex-direction: row;
+float: right;
+margin-right: 15px;
+margin-left: auto;
+
+}
+
+.itemchild-button {
+  width: 50px;
+  height: 25px;
+  margin-left: 5px;
+}
+
+.item-child-input {
+  height: 26px;
+}
+
+.item-delete-button{
+  
+}
