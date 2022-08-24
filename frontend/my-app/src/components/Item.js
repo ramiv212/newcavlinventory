@@ -46,7 +46,7 @@ function Item({name,items,manufacturer,index,setItems}) {
 
       console.log('item rendered')
     }
-    ,[children])
+    ,[children,index])
 
   return (
     <div>

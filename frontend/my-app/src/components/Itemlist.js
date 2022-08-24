@@ -1,5 +1,6 @@
 import React,{useEffect,useState,useContext} from 'react'
 import Item from './Item'
+import CreateItem from './CreateItem'
 import {itemsByIdContext,itemsByNameContext,renderNamesContext} from './../contexts/jsonItemsContext'
 
 // function get the names of all items in the json object
@@ -28,12 +29,15 @@ var nameSetFunc = (jsonRes) => {
 function Itemlist() {
 
     const {getJson,idIsLoaded,setIdIsLoaded} = useContext(itemsByIdContext)
-    const {getJsonByName,asyncName,nameIsLoaded,setNameIdIsLoaded} = useContext(itemsByNameContext)
+    const {getJsonByName,nameIsLoaded,setNameIdIsLoaded} = useContext(itemsByNameContext)
     const {renderNames} = useContext(renderNamesContext)
 
     const [items, setItems] = useState([])
     const [itemsByName, setItemsByName] = useState([])
     const [nameSet, setNameSet] = useState([])
+
+    // Create Item component edit state
+    const [createItemEdit,setCreateItemEdit] = useState(false)
 
     // run on render
     useEffect(() => {
@@ -81,9 +85,12 @@ function Itemlist() {
                 setItems={setItems}/>
             </div>
         ))}
+      <div className='item-info-container itemlist-item' onClick={() => {setCreateItemEdit(!createItemEdit); console.log('clicked')}}>
+        <div style={{margin: 'auto'}}>Create Item {createItemEdit ? <b>-</b> : <b>+</b>}</div>
+      </div>
+      {createItemEdit && <CreateItem className='itemlist-child' editState={setCreateItemEdit}/>}
       </div>
       }
-
     </div>
     
   )

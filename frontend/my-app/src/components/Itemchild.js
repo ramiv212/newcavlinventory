@@ -1,7 +1,7 @@
 import React,{useState,useContext} from 'react'
 import {renderNamesContext} from '../contexts/jsonItemsContext'
 import {itemsByIdContext} from '../contexts/jsonItemsContext'
-import {asyncFunc} from './helperFuncs'
+
 
 
 function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnlyChild,refreshItem,setRefreshItem,hideChildren}) {
@@ -150,7 +150,7 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
         // if true then delete the item by index. deleteItem returns objet with all items
         // also pass the setEdit func to delete item so that it can be set to false from inside that function
         // this is to close the edit state once item has been deleted
-        () => {window.confirm("Are you sure?") ? asyncFunc(deleteItem(index,childIndex,setEdit),setItems)
+        () => {window.confirm("Are you sure?") ? deleteItem(index,childIndex,setEdit)
                : console.log('Delete Canceled')}
       } className='btn btn-danger item-delete-button'>Delete</button>}
 
@@ -166,6 +166,7 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
                 setBarcodeState(itemObject['barcode'])
                 setManufacturerState(itemObject['manufacturer'])
                 setNameState(itemObject['name'])
+                setSerialState(itemObject['serial'])
                 setCategoryState(itemObject['category'])
                 setStorageState(itemObject['storage'])
                 setStatusState(itemObject['status'])
