@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import Itemchild from './Itemchild'
+import { deleteAll } from './helperFuncs'
 
 
 function Item({name,items,manufacturer,index,setItems}) {
@@ -49,7 +50,7 @@ function Item({name,items,manufacturer,index,setItems}) {
     ,[children,index])
 
   return (
-    <div>
+    <div className={'main-parent-div' + index}>
       
     <div className={'item-info-container itemlist-item parent-item' + index} onClick={toggleHideChildren} >  
       <div className='item-manufacturer'>{manufacturer}</div>&nbsp;
@@ -71,7 +72,12 @@ function Item({name,items,manufacturer,index,setItems}) {
         }
       })}
     </div>
-      
+      {/* delete button */}
+      <div className={'itemlist-children itemlist-children'}>
+                    <div className={index +'itemlist-child itemlist-child'}>
+                      <button onClick={() => {deleteAll(name,index)}} className='btn btn-danger '>Delete All</button>
+                    </div>
+                  </div>
     </div>
   )
 }

@@ -15,7 +15,9 @@ class single_item_resource(Resource):
     def post(self):
         # create item
         content = request.json
-        items.create_item(**content)
+        # run this funcion as many times as qty
+        for _ in range(int(content["qty"])):
+            items.create_item(**content)
 
         return json.dumps(items.return_all_items_by_ID())
 
@@ -47,6 +49,11 @@ class all_items_resource(Resource):
             return json.dumps(items.return_all_items_by_name())
         elif by == "barcode":
             return json.dumps(items.return_all_items_by_barcode())
+        
+    def delete(self,item_name):
+        print(item_name)
+        items.bulk_delete(item_name,'name')
+        return json.dumps(items.return_all_items_by_barcode())
 
 
 class item_filter_resource(Resource):

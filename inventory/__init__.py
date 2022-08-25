@@ -26,7 +26,7 @@ api = Api(app)
 
 from inventory.resources.restful.itemroutes import single_item_resource,all_items_resource,item_filter_resource
 api.add_resource(single_item_resource, '/api/item', '/api/item/<string:item_ID>')
-api.add_resource(all_items_resource, '/api/items')
+api.add_resource(all_items_resource, '/api/items', '/api/items/<string:item_name>')
 api.add_resource(item_filter_resource, '/api/item_filter')
 
 

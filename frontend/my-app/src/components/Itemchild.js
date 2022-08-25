@@ -1,7 +1,7 @@
 import React,{useState,useContext} from 'react'
 import {renderNamesContext} from '../contexts/jsonItemsContext'
 import {itemsByIdContext} from '../contexts/jsonItemsContext'
-
+import {validateBarcode} from './helperFuncs'
 
 
 function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnlyChild,refreshItem,setRefreshItem,hideChildren}) {
@@ -22,6 +22,8 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
   const [storageState,setStorageState] = useState('')
   const [statusState,setStatusState] = useState('')
   const [notesState,setNotesState] = useState('')
+
+  const [validation,setValidation] = useState('')
 
   // this state is to check if the name field was updated. If it was, re-render the whole item list.
   const [nameWasUpdated,setNameWasUpdated] = useState(false)
@@ -81,6 +83,7 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
         {/* item name and barcode text. Show and hide with state. */}
         
         {(edit) && <div className='item-child-text'>
+        Qty: <br />
         Barcode:<br />
         Manufacturer:<br />
         Name:<br />
@@ -97,9 +100,9 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
 
         {/* item input boxes. Show and hide with state. */}
         {/* Change name and barcode state with onChange handler */}
-        {edit && <div><input className='item-child-input' value={barcodeState} onChange={
-          (e) => {setBarcodeState(e.target.value);}
-        }></input></div>}
+        {edit && <div><input className='item-child-input' value={barcodeState} 
+        onChange={(e) => {setBarcodeState(validateBarcode(e.target.value,setValidation));}
+        } type='number'></input></div>}
 
         {edit && <div><input className='item-child-input' value={manufacturerState} onChange={
           (e) => {setManufacturerState(e.target.value);}
@@ -144,6 +147,7 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
           (e) => {setNotesState(e.target.value);}
         }></textarea></div>}
 
+
         {/* delete button */}
         {edit && <button onClick={
         // if edit state is false then set to true and vice versa
@@ -157,7 +161,8 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
         </div>
       </div>
       
-      <div className='child-item-button-div'>
+      <div className='child-item-button-div' style={{display: 'flex', flexDirection: 'column',alignItems:'center'}}>
+        <div style={{display: 'flex',width:'100%',alignItems:'center'}}>
       {/* edit button. Show and hide with state. Populate
       the input boxes with object info. */}
       {(!edit) && <button onClick={
@@ -178,16 +183,20 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
         // if edit state is false then set to true and vice versa
         // check if the name was updated in the item. If it was, it wil re-render the whole items list to reflect the name change
         () => {(edit) ? setEdit(false) : setEdit(true); updateItem(); nameWasUpdated ? setRenderNames(!renderNames):console.log(nameWasUpdated)}
-      } className='btn btn-success itemchild-button'>Update</button>}
+      } className='btn btn-success itemchild-button' 
+        disabled={validation != "" ? true : false }>Update</button>}
 
       {/* cancel update button */}
       {edit && <button onClick={
         // if edit state is false then set to true and vice versa
         () => {(edit) ? setEdit(false) : setEdit(true);}
       } className='btn btn-danger itemchild-button'>Cancel</button>}
+      </div>
+
+        {edit && <span style={{width:'100%',padding: '10px'}}>{validation}</span>}
 
     </div>
-
+      
     </div>
   )
 }

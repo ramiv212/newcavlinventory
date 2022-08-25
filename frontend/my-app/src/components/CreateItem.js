@@ -8,6 +8,7 @@ function CreateItem({editState}) {
     const {deleteItem} = useContext(itemsByIdContext)
 
     // these are the state of the input fields
+  const [qtyState,setQtyState] = useState(1)
     const [nameState,setNameState] = useState('')
     const [serialState,setSerialState] = useState('')
     const [manufacturerState,setManufacturerState] = useState('')
@@ -20,6 +21,7 @@ function CreateItem({editState}) {
     function createItem(){
         const url = "http://localhost:5000/api/item"
         const data = {
+          qty: qtyState,
           manufacturer: manufacturerState,
           name: nameState,
           serial: serialState,
@@ -63,9 +65,10 @@ function CreateItem({editState}) {
   return (
     <div style={{display: 'flex', flexDirection: 'row',fontSize:'125%',width:'75%',margin:'auto'}} className='itemlist-child-inner-div'>
 
+
         {/* item name and barcode text. Show and hide with state. */}
-        
     <div className='item-child-text'>
+        Qty:<br />
         Manufacturer:<br />
         Name:<br />
         Serial:<br />
@@ -77,6 +80,9 @@ function CreateItem({editState}) {
         <div>
 
         {/* item input boxes. */}
+        <div><input type='number' className='item-child-input' value={qtyState} onChange={
+          (e) => {setQtyState(e.target.value);}
+        }></input></div>
 
         <div><input className='item-child-input' value={manufacturerState} onChange={
           (e) => {setManufacturerState(e.target.value);}

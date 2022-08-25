@@ -190,3 +190,56 @@ def link_item_to_event(item_ID,event_ID):
 	new_link = Link(item_id=item_ID,event_id=event_ID)
 	db.session.add(new_link)
 	db.session.commit()
+
+
+def item_filter_query_db_object(query,filter_by):
+	param = None
+
+	if filter_by == "ID":
+		param = Item.ID
+	elif filter_by == "barcode":
+		param = Item.barcode
+	elif filter_by == "serial":
+		param = Item.serial
+	elif filter_by == "manufacturer":
+		param = Item.manufacturer
+	elif filter_by == "name":
+		param = Item.name
+	elif filter_by == "category":
+		param = Item.category
+	elif filter_by == "storage":
+		param = Item.storage
+	elif filter_by == "status":
+		param = Item.status
+	elif filter_by == "notes":
+		param = Item.notes
+
+	items = db.session.query(Item).filter(param==query).all()
+
+
+	return items
+
+def bulk_delete(query,filter_by):
+	param = None
+
+	if filter_by == "ID":
+		param = Item.ID
+	elif filter_by == "barcode":
+		param = Item.barcode
+	elif filter_by == "serial":
+		param = Item.serial
+	elif filter_by == "manufacturer":
+		param = Item.manufacturer
+	elif filter_by == "name":
+		param = Item.name
+	elif filter_by == "category":
+		param = Item.category
+	elif filter_by == "storage":
+		param = Item.storage
+	elif filter_by == "status":
+		param = Item.status
+	elif filter_by == "notes":
+		param = Item.notes
+
+	db.session.query(Item).filter(param==query).delete()
+	db.session.commit()
