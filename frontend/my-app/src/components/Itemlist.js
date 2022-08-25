@@ -20,7 +20,7 @@ var nameSetFunc = (jsonRes) => {
         }
 
     // create an array and spread all the set elements into the array
-    var nameArray = [...nameSet]
+    var nameArray = [...nameSet].sort()
 
     }return nameArray
 }
@@ -58,10 +58,36 @@ function Itemlist() {
       }
   
       setJson()
-
       console.log('itemlist re-rendered')
 
+
+      // item sorting?
+      function sortBy(by){
+        var sortingArray = []
+        var nameArray = []
+        nameSet.forEach(element => {
+          sortingArray.push(itemsByName[element])
+        });
+          
+        console.log(sortingArray)
+
+          sortingArray.sort(function (x, y) {
+            let a = x.by.toUpperCase(),
+                b = y.by.toUpperCase();
+            return a == b ? 0 : a > b ? 1 : -1;
+        });
+
+        sortingArray.forEach(element => {
+          nameArray.push(element['name'])
+        });
+        console.log(nameArray)
+      }
+
+      sortBy('manufacturer')
+
     }, [renderNames])
+
+
 
 
   return (
