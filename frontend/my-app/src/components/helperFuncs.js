@@ -1,3 +1,5 @@
+import { Children } from "react"
+
 export function validateBarcode(userInput,state){
 
     // check if lentgth

@@ -35,7 +35,7 @@ async function getJson() {
  }
 
 //  delete item from server
-function deleteItem(index,childIndex,editState){
+function deleteItem(index,childIndex,editState,setQty){
   const url = "http://localhost:5000/api/item/" + childIndex
   const data = {}
   const params = {
@@ -46,19 +46,30 @@ function deleteItem(index,childIndex,editState){
    let response = fetch(url,params)
     .then(data => data.json())
     .then(res => res)
+    .then(
 
-  // close edit state for this deleted child node
-  editState(false)
+      (data) => {
+        if (data) {
+            // close edit state for this deleted child node
+            editState(false)
 
-  const itemParent = document.getElementsByClassName('parent-item' + index)
-  const itemChildren = document.getElementsByClassName('itemlist-children' + index)
-  const thisItem = document.getElementsByClassName('id' + childIndex)
+            const itemParent = document.getElementsByClassName('main-parent-div' + index)
+            const thisItem = document.getElementsByClassName('id' + childIndex)
 
-  // remove this HTML node from DOM
-  thisItem[0].remove()
+            // remove this HTML node from DOM
+            thisItem[0].remove()
 
-  // check if this is the last child in the parent node. if so, delete parent node.
-  itemChildren[0].childNodes.length === 0 ? itemParent[0].remove() : console.log()
+            // update the quantity of items after deleting
+            const itemChildren = document.getElementsByClassName('itemlist-children' + index)
+            setQty(itemChildren[0].childNodes.length)
+
+            // check if this is the last child in the parent node. if so, delete parent node.
+            itemChildren[0].childNodes.length === 0 ? itemParent[0].remove() : console.log()
+
+        }
+      }
+
+    )
 
     return response
 } 

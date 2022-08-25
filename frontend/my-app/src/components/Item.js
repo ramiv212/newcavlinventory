@@ -8,6 +8,8 @@ function Item({name,items,manufacturer,index,setItems}) {
   const [refreshItem,setRefreshItem] = useState(false)
   const [children,setChildren] = useState(document.getElementsByClassName(index))
 
+  const [qty,setQty] = useState(0)
+
   function hideChildren(){
     // iterate over children and hide them
     for (const key in children) {
@@ -45,6 +47,8 @@ function Item({name,items,manufacturer,index,setItems}) {
       setChildren(document.getElementsByClassName(index + 'itemlist-child'))
       hideChildren()
 
+      setQty(children.length - 1)
+
       console.log('item rendered')
     }
     ,[children,index])
@@ -52,7 +56,8 @@ function Item({name,items,manufacturer,index,setItems}) {
   return (
     <div className={'main-parent-div' + index}>
       
-    <div className={'item-info-container itemlist-item parent-item' + index} onClick={toggleHideChildren} >  
+    <div className={'item-info-container itemlist-item parent-item' + index} onClick={toggleHideChildren}>
+      <div>{qty} | </div> &nbsp;
       <div className='item-manufacturer'>{manufacturer}</div>&nbsp;
       <div className='item-name'>{name}</div>
     </div>
@@ -68,6 +73,7 @@ function Item({name,items,manufacturer,index,setItems}) {
           items={items}
           refreshItem={refreshItem}
           setRefreshItem={setRefreshItem}
+          setQty={setQty}
           key={i}/>
         }
       })}

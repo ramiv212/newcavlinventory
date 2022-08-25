@@ -4,7 +4,7 @@ import {itemsByIdContext} from '../contexts/jsonItemsContext'
 import {validateBarcode} from './helperFuncs'
 
 
-function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnlyChild,refreshItem,setRefreshItem,hideChildren}) {
+function Itemchild({itemObject,index,childIndex,setItems,setQty}) {
 
   // this is a context that can be used to re-render the whole list
   const {renderNames,setRenderNames} = useContext(renderNamesContext)
@@ -154,7 +154,7 @@ function Itemchild({itemObject,index,childIndex,setItems,items,onlyChild,setOnly
         // if true then delete the item by index. deleteItem returns objet with all items
         // also pass the setEdit func to delete item so that it can be set to false from inside that function
         // this is to close the edit state once item has been deleted
-        () => {window.confirm("Are you sure?") ? deleteItem(index,childIndex,setEdit)
+        () => {window.confirm("Are you sure?") ? deleteItem(index,childIndex,setEdit,setQty)
                : console.log('Delete Canceled')}
       } className='btn btn-danger item-delete-button'>Delete</button>}
 
