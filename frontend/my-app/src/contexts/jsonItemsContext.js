@@ -20,7 +20,6 @@ async function getJson() {
    .then(response => response.json())
    .then(data => JSON.parse(data))
 
-   setIdIsLoaded(true)
    return jsonData
  }
 
@@ -35,7 +34,7 @@ async function getJson() {
  }
 
 //  delete item from server
-function deleteItem(index,childIndex,editState,setQty){
+function deleteItem(index,childIndex,editState,qty,setQty){
   const url = "http://localhost:5000/api/item/" + childIndex
   const data = {}
   const params = {
@@ -57,14 +56,14 @@ function deleteItem(index,childIndex,editState,setQty){
             const thisItem = document.getElementsByClassName('id' + childIndex)
 
             // remove this HTML node from DOM
-            thisItem[0].remove()
+            thisItem[0].style.display = "none"
 
             // update the quantity of items after deleting
             const itemChildren = document.getElementsByClassName('itemlist-children' + index)
-            setQty(itemChildren[0].childNodes.length)
+            setQty(qty - 1)
 
-            // check if this is the last child in the parent node. if so, delete parent node.
-            itemChildren[0].childNodes.length === 0 ? itemParent[0].remove() : console.log()
+            // check if this is the last child in the parent node. if so, hide parent node.
+            qty === 1 ? itemParent[0].style.display = 'none' : console.log()
 
         }
       }

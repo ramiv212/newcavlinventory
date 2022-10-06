@@ -1,10 +1,8 @@
-import { Children } from "react"
-
 export function validateBarcode(userInput,state){
 
     // check if lentgth
 
-    if (userInput.length != 8){
+    if (userInput.length !== 8){
         state(<span>Length of barcode must be 8 characters</span>)
     }else if (isNaN(userInput)){
         state(<span>Barcode must be a number</span>)
@@ -32,7 +30,7 @@ export function deleteAll(name,index) {
         
         if (window.confirm('Are you sure? This action cannot be undone!')){
             const parentDiv = document.getElementsByClassName('main-parent-div' + index)
-            parentDiv[0].remove()
+            parentDiv[0].style.display = 'none'
         }
         return response.json()
       } else {

@@ -1,8 +1,9 @@
 import React,{useState,useContext} from 'react'
 import {renderNamesContext} from '../contexts/jsonItemsContext'
 import {itemsByIdContext} from '../contexts/jsonItemsContext'
+import { qtyValidation } from './helperFuncs'
 
-function CreateItem({editState}) {
+function CreateItem({editState,setItems}) {
 
     const {renderNames,setRenderNames} = useContext(renderNamesContext)
     const {deleteItem} = useContext(itemsByIdContext)
@@ -80,8 +81,9 @@ function CreateItem({editState}) {
         <div>
 
         {/* item input boxes. */}
+        {/* check that the input number is not less than 1 */}
         <div><input type='number' className='item-child-input' value={qtyState} onChange={
-          (e) => {setQtyState(e.target.value);}
+          (e) => {e.target.value > 1 ? setQtyState(e.target.value) : setQtyState('1') ;}
         }></input></div>
 
         <div><input className='item-child-input' value={manufacturerState} onChange={
